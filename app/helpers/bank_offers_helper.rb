@@ -1,0 +1,2 @@
+module BankOffersHelper
+end

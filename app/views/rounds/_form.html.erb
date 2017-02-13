@@ -1,0 +1,38 @@
+<%= simple_form_for(@round) do |f| %>
+	<%= f.error_notification %>
+	<div class="form-inputs">
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+				<%= f.input :name, label: "Adı" %>
+			</div>
+		</div>
+	</div>
+	<% sayac=0 %>
+	<div class="form-inputs">
+		<div class="row">
+			<%= f.simple_fields_for :bank_offers do |build|%>
+				<div class="col-md-2">
+					<%= build.input :bank_id, collection: Bank.where.not(id: RoundStatus.select(:bank_id)), label: "Banka:", selected: Bank.where.not(id: RoundStatus.select(:bank_id))[sayac].id %> <br />
+					<%= build.input :price, :as =>:string, label: "Teklif Miktarı" %>
+				</div>
+				<% sayac=sayac+1 %>
+		    <% end %>
+		</div>
+    </div>
+	<div class="form-actions">
+		<div class="row">
+			<div class="col-md-offset-4 col-md-4">
+				<%= f.button :submit, "Kaydet", :class => "btn btn-primary btn-block" %>
+			</div>
+		</div>
+	</div>
+
+<% end %>
+
+<script>
+  $(function() {
+  	<% Bank.count.times do |i| %>
+    $('#round_bank_offers_attributes_<%= i %>_price').maskMoney();
+    <% end %>
+  })
+</script>

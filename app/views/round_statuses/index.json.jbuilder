@@ -1,0 +1,1 @@
+json.array! @round_statuses, partial: 'round_statuses/round_status', as: :round_status

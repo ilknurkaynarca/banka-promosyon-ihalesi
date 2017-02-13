@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      	<p id="notice"><%= notice %></p>
+
+		<p>
+		  <strong>Name:</strong>
+		  <%= @cause.name %>
+		</p>
+
+		<%= link_to 'Düzenle', edit_cause_path(@cause) %> |
+		<%= link_to 'Back', causes_path %>
+    </div>    
+  </div>
+
+</div><!-- /.container -->

@@ -1,0 +1,97 @@
+<script type="text/javascript">
+  function loop() {
+    location.reload();
+  }
+  setTimeout('loop()',15000);
+</script>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+          <div class="panel-body">
+              <div class="table-responsive">
+                  <table class="table table-striped table-bordered table-hover" style="text-align: center;">
+                    <thead>
+                      <tr>
+                        <th rowspan="2" style="vertical-align: middle;"><center>Turlar</center></th>
+                        <th colspan="<%= @banks.count%>">Teklif Veren Bankalar ve Teklif Fiyatları (Kişi Başı TL)</th>
+                        <th rowspan="2" style="vertical-align: middle;"><center>Elenen Bankalar</center></th>
+                      </tr>
+                      <tr>
+                        <% @banks.each do |bank| %>
+                          <th style="vertical-align: middle;"><center><%= bank.name.mb_chars.upcase %></center></th>
+                        <% end %>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <% @rounds.each do |round| %>
+                        <tr>
+                          <td><%= round.name %></td>
+                          <% @banks.each do |bank| %>
+                          <td <%= bank.round_status ? 'class="danger"'.html_safe : "" %> ><b> <%= bank.bank_offers.find_by(round: round) ? number_to_currency(bank.bank_offers.find_by(round: round).price, :unit=> " <i class='fa fa-try' aria-hidden='true'></i> ".html_safe) : "" %><br /> <%= bank.round_status ?  bank.round_status.round == round ? bank.round_status.cause.name : ""  : ""%></b>
+                          </td>
+                          <% end %>
+                          <td><b><% if round.is_round_statuses
+                                  round.round_statuses.each do |round_status| %>
+                                    <%= round_status.bank.name %>,
+                                  <% end %>
+                              <% end %></b>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+              </div>
+              <!-- /.table-responsive -->
+          </div>
+          <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+  </div>
+    <div class="col-md-offset-2 col-md-4">
+      <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-arrow-up  fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><%= @rounds.last ? number_to_currency(@rounds.last.bank_offers.maximum("price"), :unit => " <i class='fa fa-try' aria-hidden='true'></i> ".html_safe) : ""%></div>
+                        <div class="huge">
+                        <%= @rounds.last ? @bank_offers.where(price: @rounds.last.bank_offers.maximum("price"), round: @rounds.last).count == 1 ? @bank_offers.find_by(price: @rounds.last.bank_offers.maximum("price"), round: @rounds.last).bank.name : "Birden çok teklif var." : ""
+                        %>
+                                  
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="panel-footer">
+                  <span class="pull-left">En Yüksek Teklif</span>
+                  <div class="clearfix"></div>
+              </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-danger">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-arrow-down fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><%= @rounds.last ? number_to_currency(@rounds.last.bank_offers.minimum("price"), :unit=>" <i class='fa fa-try' aria-hidden='true'></i> ".html_safe) : ""%></div>
+                        <div class="huge">
+                        <%= @rounds.last ? @bank_offers.where(price: @rounds.last.bank_offers.minimum("price"), round: @rounds.last).count == 1 ? @bank_offers.find_by(price: @rounds.last.bank_offers.minimum("price"), round: @rounds.last).bank.name : "Birden çok teklif var." : ""
+                        %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="panel-footer">
+                  <span class="pull-left">En Düşük Teklif</span>
+                  <div class="clearfix"></div>
+              </div>
+        </div>
+    </div>
+</div><!-- /.container -->

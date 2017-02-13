@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <p id="notice"><%= notice %></p>
+
+      <h1>Elenen Bankalar</h1>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Tur</th>
+            <th>Banka</th>
+            <th>Elenme Sebebi</th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @round_statuses.each do |round_status| %>
+            <tr>
+              <td><%= round_status.round.name %></td>
+              <td><%= round_status.bank.name %></td>
+              <td><%= round_status.cause.name %></td>
+              <td><%= link_to 'Düzenle', edit_round_status_path(round_status) %></td>
+              <td><%= link_to 'Sil', round_status, method: :delete, data: { confirm: 'Emin misin?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <br>
+
+      <%= link_to 'New Round status', new_round_status_path %>
+    </div>    
+  </div>
+
+</div><!-- /.container -->
+
+

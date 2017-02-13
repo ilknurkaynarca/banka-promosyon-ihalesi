@@ -1,0 +1,13 @@
+<%= simple_form_for(@round_status) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :round_id, collection: Round.all, label: "Tur Seçiniz", selected: Round.last.id %>
+    <%= f.input :bank_id, collection: Bank.where.not(id: RoundStatus.select(:bank_id)), label: "Banka Seçiniz" %>
+    <%= f.input :cause_id, collection: Cause.all, label: "Elenme Sebebi Seçiniz" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Kaydet" %>
+  </div>
+<% end %>

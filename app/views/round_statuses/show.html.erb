@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      	<p id="notice"><%= notice %></p>
+
+		<p>
+		  <strong>Round:</strong>
+		  <%= @round_status.round_id %>
+		</p>
+
+		<p>
+		  <strong>Bank:</strong>
+		  <%= @round_status.bank_id %>
+		</p>
+
+		<p>
+		  <strong>Cause:</strong>
+		  <%= @round_status.cause_id %>
+		</p>
+
+		<%= link_to 'Düzenle', edit_round_status_path(@round_status) %> |
+		<%= link_to 'Back', round_statuses_path %>
+    </div>    
+  </div>
+
+</div><!-- /.container -->

@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <p id="notice"><%= notice %></p>
+
+      <h1>Turlar</h1>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Adı</th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @rounds.each do |round| %>
+            <tr>
+              <td><%= round.name %></td>
+              <td><%= link_to 'Düzenle', edit_round_path(round) %></td>
+              <td><%= link_to 'Sil', round, method: :delete, data: { confirm: 'Emin misin?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <br>
+
+      <%= link_to 'New Round', new_round_path %>
+    </div>    
+  </div>
+
+</div><!-- /.container -->
+
+
